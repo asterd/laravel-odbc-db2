@@ -38,6 +38,12 @@ class ODBCConnector extends Connector implements ConnectorInterface
     protected function getDsn(array $config)
     {
         extract($config);
+        /** @var integer $port */
+        /** @var string $odbc_driver */
+        /** @var string $database */
+        /** @var string $host */
+        /** @var string $username */
+        /** @var string $password */
 
         $port = isset($port) ? $port : 50000;
 
