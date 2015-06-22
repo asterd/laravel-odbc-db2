@@ -2,7 +2,7 @@
 
 use Illuminate\Database\DatabaseManager;
 
-class DatabaseServiceProvider extends Illuminate\Database\DatabaseServiceProvider
+class DatabaseServiceProvider extends \Illuminate\Database\DatabaseServiceProvider
 {
     /**
      * Register the service provider.
