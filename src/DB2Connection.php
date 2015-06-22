@@ -4,8 +4,8 @@ use PDO;
 use Illuminate\Database\Connection;
 use Cooperl\Database\DB2\Schema\Builder;
 use Cooperl\Database\DB2\Query\Processors\DB2Processor;
+use Opb\LaravelOdbcDb2\SchemaDB2Grammar as SchemaGrammar;
 use Cooperl\Database\DB2\Query\Grammars\DB2Grammar as QueryGrammar;
-use Cooperl\Database\DB2\Schema\Grammars\DB2Grammar as SchemaGrammar;
 
 class DB2Connection extends Connection
 {
