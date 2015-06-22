@@ -24,12 +24,12 @@ Once the above has been done, we need to get it working with Laravel.
     'providers' => [
     
     	//Illuminate\Database\DatavaseServiceProvider,
-    	Opb\LaravelOdbcDb2\DataaseServiceProvider
+    	Opb\LaravelOdbcDb2\DatabaseServiceProvider,
     ```
 3. Add our new database config into the `connections` array in `database.php`, under the `odbc` key. Note that we're using `.env` variables, and that the `odbc_driver` variable is set to what we named our driver when we created it with unixODBC:
 
     ```php
-    		'odbc' => [
+    	'odbc' => [
 			'driver'         => 'odbc',
 			'host'           => env('DB2_HOST', 'localhost'),
 			'database'       => env('DB2_DATABASE', ''),
@@ -37,7 +37,8 @@ Once the above has been done, we need to get it working with Laravel.
 			'password'       => env('DB2_PASSWORD', 'password'),
 			'port'			 => env('DB2_PORT', 50000),
 			'schema'		 => 'DB2INST1',
-			'odbc_driver'    => 'DB2',
+			'odbc_driver'    => 'DB2', // name of driver created by unixODBC
 		],
     ```
+4. If this is your default DB connection, remember to modify the `'default'` key in `database.php` to reflect this.
     
