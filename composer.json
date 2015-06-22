@@ -8,8 +8,14 @@
             "email": "olly@opb.me.uk"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "\\Opb\LaravelOdbcDb2": "src/"
+        }
+    },
     "minimum-stability": "stable",
     "require": {
-        "illuminate/contracts": "^5.1"
+        "illuminate/contracts": "^5.1",
+        "illuminate/support": "^5.1"
     }
 }
