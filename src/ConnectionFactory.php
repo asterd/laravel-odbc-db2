@@ -1,5 +1,13 @@
 <?php namespace Opb\LaravelOdbcDb2;
 
+use Illuminate\Database\MySqlConnection;
+use Illuminate\Database\SQLiteConnection;
+use Illuminate\Database\PostgresConnection;
+use Illuminate\Database\SqlServerConnection;
+use Illuminate\Database\Connectors\MySqlConnector;
+use Illuminate\Database\Connectors\SQLiteConnector;
+use Illuminate\Database\Connectors\PostgresConnector;
+use Illuminate\Database\Connectors\SqlServerConnector;
 use Illuminate\Database\Connectors\ConnectionFactory as LaravelConnectionFactory;
 
 class ConnectionFactory extends LaravelConnectionFactory{
@@ -74,7 +82,7 @@ class ConnectionFactory extends LaravelConnectionFactory{
                 return new SqlServerConnection($connection, $database, $prefix, $config);
 
             case 'odbc':
-                return new \Cooperl\Database\DB2\DB2Connection($connection, $database, $prefix, $config);
+                return new DB2Connection($connection, $database, $prefix, $config);
         }
 
         throw new InvalidArgumentException("Unsupported driver [$driver]");
