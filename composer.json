@@ -1,0 +1,15 @@
+{
+    "name": "opb/laravel-odbc-db2",
+    "description": "ODBC driver for DB2 for Laravel's Eloquent ORM",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Olly Butterfield",
+            "email": "olly@opb.me.uk"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "illuminate/contracts": "^5.1"
+    }
+}
