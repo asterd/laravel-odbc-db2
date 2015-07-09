@@ -646,6 +646,28 @@ class DB2Grammar extends Grammar {
     }
 
     /**
+     * Create the column definition for a json type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeJson(Fluent $column)
+    {
+        return 'text';
+    }
+
+    /**
+     * Create the column definition for a jsonb type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeJsonb(Fluent $column)
+    {
+        return 'text';
+    }
+
+    /**
      * Get the SQL for a nullable column modifier.
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
