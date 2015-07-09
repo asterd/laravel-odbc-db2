@@ -1,7 +1,7 @@
 <?php namespace Opb\LaravelOdbcDb2\Schema;
 
 use Closure;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Blueprint as laravelBlueprint;
 
 class Builder extends \Illuminate\Database\Schema\Builder {
 
@@ -52,10 +52,10 @@ class Builder extends \Illuminate\Database\Schema\Builder {
     /**
      * Execute the blueprint to build / modify the table.
      *
-     * @param  \Cooperl\Database\DB2\Schema\Blueprint  $blueprint
+     * @param  LaravelBlueprint  $blueprint
      * @return void
      */
-    protected function build(Blueprint $blueprint)
+    protected function build(LaravelBlueprint $blueprint)
     {
         $schemaTable = explode(".", $blueprint->getTable());
         if (count($schemaTable) > 1)
@@ -73,7 +73,7 @@ class Builder extends \Illuminate\Database\Schema\Builder {
      *
      * @param  string    $table
      * @param  \Closure  $callback
-     * @return \Cooperl\Database\DB2\Schema\Blueprint
+     * @return Blueprint
      */
     protected function createBlueprint($table, Closure $callback = null)
     {
@@ -82,7 +82,7 @@ class Builder extends \Illuminate\Database\Schema\Builder {
             return call_user_func($this->resolver, $table, $callback);
         }
 
-        return new \Cooperl\Database\DB2\Schema\Blueprint($table, $callback);
+        return new Blueprint($table, $callback);
     }
 
 }

@@ -81,7 +81,6 @@ class DB2Grammar extends Grammar {
         }
 
         $sql .= " ($columns)";
-        var_dump($sql);
         return $sql;
     }
 
