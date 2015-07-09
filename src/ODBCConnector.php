@@ -1,5 +1,6 @@
 <?php namespace Opb\LaravelOdbcDb2;
 
+use PDO;
 use Illuminate\Database\Connectors\Connector;
 use Illuminate\Database\Connectors\ConnectorInterface;
 
@@ -37,17 +38,12 @@ class ODBCConnector extends Connector implements ConnectorInterface
      */
     protected function getDsn(array $config)
     {
-        extract($config);
-        /** @var integer $port */
-        /** @var string $odbc_driver */
-        /** @var string $database */
-        /** @var string $host */
-        /** @var string $username */
-        /** @var string $password */
+        $driver = array_pull($config['dsn_params'], 'DRIVER');
 
-        $port = isset($port) ? $port : 50000;
+        $dsn = "odbc:DRIVER={".$driver."};";
 
-        return "odbc:DRIVER={".$odbc_driver."};DATABASE=$database;HOSTNAME=$host;PORT=$port;PROTOCOL=TCPIP;UID=$username;PWD=$password;";
+        foreach($config['dsn_params'] as $key => $val) $dsn .= "{$key}={$val};";
+
+        return $dsn;
     }
 }
-

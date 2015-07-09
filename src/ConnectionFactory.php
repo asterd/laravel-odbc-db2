@@ -1,5 +1,6 @@
 <?php namespace Opb\LaravelOdbcDb2;
 
+use InvalidArgumentException;
 use Illuminate\Database\MySqlConnection;
 use Illuminate\Database\SQLiteConnection;
 use Illuminate\Database\PostgresConnection;

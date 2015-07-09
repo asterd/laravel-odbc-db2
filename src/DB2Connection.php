@@ -2,13 +2,13 @@
 
 use PDO;
 use Illuminate\Database\Connection;
-use Cooperl\Database\DB2\Schema\Builder;
-use Cooperl\Database\DB2\Query\Processors\DB2Processor;
-use Opb\LaravelOdbcDb2\Schema\DB2Grammar as SchemaGrammar;
-use Cooperl\Database\DB2\Query\Grammars\DB2Grammar as QueryGrammar;
 
 class DB2Connection extends Connection
 {
+    /**
+     * @var PDO
+     */
+    protected $pdo;
 
     /**
      * The name of the default schema.
@@ -17,10 +17,33 @@ class DB2Connection extends Connection
      */
     protected $defaultSchema;
 
-    public function __construct(PDO $pdo, $database = '', $tablePrefix = '', array $config = [])
+    public function __construct(array $config)
     {
-        parent::__construct($pdo, $database, $tablePrefix, $config);
+        $this->config = $config;
+
+        // Build the connection string
+        $dsn = $this->getDsn($config);
+
+        // You can pass options directly to the MongoClient constructor
+        $options = array_get($config, 'options', []);
+
+        // Create the connection
+        $username = array_get($config, 'username');
+
+        $password = array_get($config, 'password');
+
+        $this->pdo = new PDO($dsn, $username, $password, $options);
+
+        if (isset($config['schema']))
+        {
+            $this->pdo->prepare('set schema'.$config['schema'])->execute();
+        }
+
         $this->currentSchema = $this->defaultSchema = strtoupper($config['schema']);
+
+        $this->useDefaultQueryGrammar();
+
+        $this->useDefaultPostProcessor();
     }
 
     /**
@@ -61,9 +84,11 @@ class DB2Connection extends Connection
      */
     public function getSchemaBuilder()
     {
-        if (is_null($this->schemaGrammar)) { $this->useDefaultSchemaGrammar(); }
+        if (is_null($this->schemaGrammar)) {
+            $this->useDefaultSchemaGrammar();
+        }
 
-        return new Builder($this);
+        return new Schema\Builder($this);
     }
 
     /**
@@ -71,7 +96,7 @@ class DB2Connection extends Connection
      */
     protected function getDefaultQueryGrammar()
     {
-        return $this->withTablePrefix(new QueryGrammar);
+        return $this->withTablePrefix(new Query\DB2Grammar);
     }
 
     /**
@@ -81,7 +106,7 @@ class DB2Connection extends Connection
     protected function getDefaultSchemaGrammar()
     {
 
-        return $this->withTablePrefix(new SchemaGrammar);
+        return $this->withTablePrefix(new Schema\DB2Grammar);
     }
 
     /**
@@ -91,7 +116,24 @@ class DB2Connection extends Connection
      */
     protected function getDefaultPostProcessor()
     {
-        return new DB2Processor;
+        return new Query\DB2Processor;
+    }
+
+    /**
+     * Get the DSN string for a host / port configuration.
+     *
+     * @param  array  $config
+     * @return string
+     */
+    protected function getDsn(array $config)
+    {
+        $driver = array_pull($config['dsn_params'], 'DRIVER');
+
+        $dsn = "odbc:DRIVER={".$driver."};";
+
+        foreach($config['dsn_params'] as $key => $val) $dsn .= "{$key}={$val};";
+
+        return $dsn;
     }
 
 }

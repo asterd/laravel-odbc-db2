@@ -56,7 +56,8 @@ class DB2Grammar extends Grammar {
      */
     public function compileColumnExists()
     {
-        return "select column_name from information_schema.columns where table_schema = upper(?) and table_name = upper(?)";
+        //return "select column_name from information_schema.columns where table_schema = upper(?) and table_name = upper(?)";
+        return "select name from sysibm.syscolumns where table_schema like upper(?) and table_name like upper(?)";
     }
 
 
@@ -80,7 +81,7 @@ class DB2Grammar extends Grammar {
         }
 
         $sql .= " ($columns)";
-
+        var_dump($sql);
         return $sql;
     }
 
@@ -683,7 +684,8 @@ class DB2Grammar extends Grammar {
     {
         if (in_array($column->type, $this->serials) && $column->autoIncrement)
         {
-            return ' as identity';
+            //return ' as identity';
+            return ' generated always as identity';
         }
     }
 
