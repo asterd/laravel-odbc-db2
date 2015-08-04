@@ -1,4 +1,4 @@
-# laravel-odbc-db2
+# laravel-odbc-db2 (Development paused)
 ODBC-based DB2 driver for Laravel5 Eloquent
 
 Thispackage will provide an ODBC-based driver for IBM's DB2 to hopefully work on LUW (Linux Unix Windows), as opposed to IBMi.
