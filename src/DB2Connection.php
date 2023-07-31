@@ -1,5 +1,6 @@
 <?php namespace Opb\LaravelOdbcDb2;
 
+use Illuminate\Support\Arr;
 use PDO;
 use Illuminate\Database\Connection;
 
@@ -25,12 +26,12 @@ class DB2Connection extends Connection
         $dsn = $this->getDsn($config);
 
         // You can pass options directly to the MongoClient constructor
-        $options = array_get($config, 'options', []);
+        $options = Arr::get($config, 'options', []);
 
         // Create the connection
-        $username = array_get($config, 'username');
+        $username = Arr::get($config, 'username');
 
-        $password = array_get($config, 'password');
+        $password = Arr::get($config, 'password');
 
         $this->pdo = new PDO($dsn, $username, $password, $options);
 
@@ -80,7 +81,7 @@ class DB2Connection extends Connection
     /**
      * Get a schema builder instance for the connection.
      *
-     * @return \Illuminate\Database\Schema\MySqlBuilder
+     * @return Schema\Builder
      */
     public function getSchemaBuilder()
     {
@@ -92,7 +93,7 @@ class DB2Connection extends Connection
     }
 
     /**
-     * @return Query\Grammars\Grammar
+     * @return \Illuminate\Database\Grammar
      */
     protected function getDefaultQueryGrammar()
     {
@@ -101,7 +102,7 @@ class DB2Connection extends Connection
 
     /**
      * Default grammar for specified Schema
-     * @return Schema\Grammars\Grammar
+     * @return \Illuminate\Database\Grammar
      */
     protected function getDefaultSchemaGrammar()
     {
@@ -112,7 +113,7 @@ class DB2Connection extends Connection
     /**
      * Get the default post processor instance.
      *
-     * @return \Illuminate\Database\Query\Processors\PostgresProcessor
+     * @return Query\DB2Processor
      */
     protected function getDefaultPostProcessor()
     {
@@ -127,11 +128,13 @@ class DB2Connection extends Connection
      */
     protected function getDsn(array $config)
     {
-        $driver = array_pull($config['dsn_params'], 'DRIVER');
+        $driver = Arr::pull($config['dsn_params'], 'DRIVER');
 
         $dsn = "odbc:DRIVER={".$driver."};";
 
-        foreach($config['dsn_params'] as $key => $val) $dsn .= "{$key}={$val};";
+        foreach($config['dsn_params'] as $key => $val) {
+            $dsn .= "{$key}={$val};";
+        }
 
         return $dsn;
     }
