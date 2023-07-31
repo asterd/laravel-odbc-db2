@@ -128,7 +128,7 @@ class DB2Connection extends Connection
      */
     protected function getDsn(array $config)
     {
-        $driver = Arr::pull($config['dsn_params'], 'DRIVER');
+        $driver = Arr::pull($config['dsn_params'], 'driver');
 
         $dsn = "odbc:DRIVER={".$driver."};";
 
