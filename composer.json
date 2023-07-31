@@ -21,8 +21,8 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "illuminate/support": "v10.16.1",
-        "illuminate/database": "v10.16.1",
+        "illuminate/support": "^10.3",
+        "illuminate/database": "^10.3",
         "cooperl/laravel-db2": "^10.3"
     }
 }
