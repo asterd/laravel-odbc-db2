@@ -24,5 +24,12 @@
         "illuminate/support": "^10.3",
         "illuminate/database": "^10.3",
         "cooperl/laravel-db2": "^10.3"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Opb\\LaravelOdbcDb2\\DatabaseServiceProvider"
+            ]
+        }
     }
 }
